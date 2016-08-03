@@ -1,2 +1,2 @@
-# vanilla-js-simple-tasks-
-JavaScript Tutorial
+# vanilla-js-simple-tasks
+A simple task management web app using vanilla JavaScript
