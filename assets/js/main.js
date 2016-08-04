@@ -47,23 +47,24 @@ var TasksModel = function(controller) {
         console.log(tasks);
     }
 }
+
 var TasksView = function(controller) {
     var view = this;
 
     this.controller = controller;
     this.placeTask = function(task) {
         var taskModel = task;
-        var taskList = document.getElementById('task-list');
-        var newTaskElement = document.createElement('li');
-        var newTaskCheckbox = document.createElement('input');
-        newTaskCheckbox.type = 'checkbox';
-        newTaskElement.id = taskModel.id;
-        var newTaskTextNode = document.createTextNode(taskModel.content);
-        newTaskElement.appendChild(newTaskCheckbox);
-        newTaskElement.appendChild(newTaskTextNode);
-        taskList.appendChild(newTaskElement);
 
-        newTaskCheckbox.addEventListener('click', function() {
+        var $undoneTaskList = $('#task-list');
+        var $doneTaskList = $('#done-task-list');
+
+        var $newTask = $('<li><input type="checkbox"><span></span></li>');
+        $newTask.attr('id', taskModel.id);
+        $newTask.find('span').text(taskModel.content);
+        $undoneTaskList.append($newTask);
+
+        var $checkbox = $newTask.find('[type="checkbox"]');
+        $checkbox.on('click', function() {
             // Update the model - but the view shouldnt know anything about it
             var todoId = +this.parentElement.id;
             var checked = this.checked;
@@ -88,9 +89,6 @@ var TasksView = function(controller) {
 
 window.onload = function() {
 
-    // We might do placeTasks(); But maybe we should separate it more.
-    // Because what about a function like markTasksAsDone() ?
-    // Does this mark the task as done on the view, or the model? Or both?
     var tasksModel = new TasksModel(this);
     var tasksView = new TasksView(this);
 
@@ -100,7 +98,6 @@ window.onload = function() {
     this.checkboxClickedAction = function(id, checked) {
         tasksModel.checkboxClicked(id, checked);
     };
-
 
 }
 
