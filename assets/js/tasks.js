@@ -4,22 +4,17 @@
     var TasksModel = function(controller) {
         var model = this;
         this.controller = controller;
+        this.tasks = null;
 
         this.getTasks = function(callback) {
-            //return this.tasks;
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    // return? nope
-                    model.tasks = JSON.parse(xmlhttp.response);
-                    callback(model.tasks);
-                }
-            };
-            xmlhttp.open("GET", "http://localhost:4000/todos", true);
-            xmlhttp.send();
+            $.get('http://localhost:4000/todos', function(response) {
+                model.tasks = response;
+                callback(model.tasks);
+            });
         }
 
         this.getTask = function(id) {
+            // Notice anything different about the above function?
             for (var i=0; i < this.tasks.length; i++) {
                 if (this.tasks[i].id === id) {
                     return this.tasks[i];
