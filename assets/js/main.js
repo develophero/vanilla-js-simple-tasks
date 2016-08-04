@@ -22,25 +22,37 @@ var tasks = [
 
 // -------------------------------------------------------------------------------------------------- NEW
 
-// Let's first do a thing where we add to the dom with jquery
-// Two is enough to make View a good idea:
-// Then make a View object and render it pieces at a time
+// Not necessarily how we'd do this in a real app, especially as we start
+// adding more pages and more functionality.
+// But not a bad example of separation of concerns and MVC.
+var TasksModel = function(controller) {
+    this.controller = controller;
+    this.tasks = tasks;
 
-function getTask(id) {
-    for (var i=0; i < tasks.length; i++) {
-        if (tasks[i].id === id) {
-            return tasks[i];
+    this.getTasks = function() {
+        return this.tasks;
+    }
+
+    this.getTask = function(id) {
+        for (var i=0; i < tasks.length; i++) {
+            if (tasks[i].id === id) {
+                return tasks[i];
+            }
         }
     }
+
+    this.checkboxClicked = function(id, checked) {
+        var task = this.getTask(id);
+        task.done = checked;
+        console.log(tasks);
+    }
 }
+var TasksView = function(controller) {
+    var view = this;
 
-window.onload = function() {
-
-    // Check and uncheck todos
-    // Then we'll get update the view and do jQuery
-
-    for (var i=0; i < tasks.length; i++) {
-        var taskModel = tasks[i];
+    this.controller = controller;
+    this.placeTask = function(task) {
+        var taskModel = task;
         var taskList = document.getElementById('task-list');
         var newTaskElement = document.createElement('li');
         var newTaskCheckbox = document.createElement('input');
@@ -52,21 +64,42 @@ window.onload = function() {
         taskList.appendChild(newTaskElement);
 
         newTaskCheckbox.addEventListener('click', function() {
-            var checked = this.checked;
+            // Update the model - but the view shouldnt know anything about it
             var todoId = +this.parentElement.id;
-            // Here - how to get the task model?
-            var task = getTask(todoId);
-            console.log(task);
-            task.done = checked;
+            var checked = this.checked;
+            view.controller.checkboxClickedAction(todoId, checked);
 
-            // After this bad code, this is where we introduce MVC
-            var undoneTaskList = document.getElementById('done-task-list');
-            undoneTaskList.appendChild(this.parentElement);
+            if (checked) {
+                var doneTaskList = document.getElementById('done-task-list');
+                doneTaskList.appendChild(this.parentElement);
+            } else {
+                var undoneTaskList = document.getElementById('task-list');
+                undoneTaskList.appendChild(this.parentElement);
+            }
 
-            // How do you add the newTaskCheckbox event listener here?
         });
     }
+    this.placeTasks = function(tasks) {
+        for (var i=0; i < tasks.length; i++) {
+            this.placeTask(tasks[i]);
+        }
+    }
+}
 
+window.onload = function() {
+
+    // We might do placeTasks(); But maybe we should separate it more.
+    // Because what about a function like markTasksAsDone() ?
+    // Does this mark the task as done on the view, or the model? Or both?
+    var tasksModel = new TasksModel(this);
+    var tasksView = new TasksView(this);
+
+    tasksView.placeTasks(tasksModel.getTasks());
+
+    // Actions from view
+    this.checkboxClickedAction = function(id, checked) {
+        tasksModel.checkboxClicked(id, checked);
+    };
 
 
 }
