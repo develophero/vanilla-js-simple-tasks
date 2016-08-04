@@ -28,11 +28,30 @@
         
       </ul>
 
-      <button class="button success" id="my-button">
-        New Task
-      </button>
+      <div class="bottom-wrapper" id='bottom-wrapper'>
+        <button class="button success" id="new-task-button">
+          New Task
+        </button>
 
-    </div>
+        <!-- This div is hidden until New Task button is clicked -->
+        <div style="display: none;" id="edit-task-wrapper" class="task-edit-wrapper">
+          <div>
+            <input type="text" id="task-content" placeholder="Content" class="task-form"/>
+            <span>Assigned to: </span>
+            <select id="task-assigned-select">
+              <option value="" style="display: none;"></option>
+              <option value="0">Alice</option>
+              <option value="1">Bob</option>
+            </select>
+          </div>
+          <div class="task-edit-button-wrapper">
+            <button id="task-edit-save" class="button edit">Save</button>
+            <button id="task-edit-cancel" class="button edit">Cancel</button>
+          </div> <!-- task-edit-button-wrapper -->
+        </div> <!-- task-edit-wrapper -->
+      </div> <!-- bottom-wrapper -->
+
+    </div> <!-- content-wrapper -->
 
     <!--<h1>My app</h1>
     <h2>Smaller title</h2>
@@ -46,6 +65,14 @@
     <p>This is another paragraph</p>
     <input type="text">
     <input type="radio">-->
+
+    <!-- Placed at end of page so pages load faster -->
+    <!-- Include jQuery using Google CDN -->
+    <!-- More info here: https://developers.google.com/speed/libraries/#jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!-- Alternate way to include jQuery using local file -->
+    <!-- <script src="assets/js/vendors/jquery-3.1.0.min.js"></script> -->
 
     <!--<script src="assets/js/lessons.js"></script>-->
     <script src="assets/js/main.js"></script>
