@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  background: #e6e6e6;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* This is the header div */
+.header {
+  background: #0066CC;
+  color: white;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.header > .item {
+  color: yellow;
+}
+
+.content-wrapper {
+  padding: 3rem;
+}
+
+.button.success {
+  border: 0;
+  padding: 0.7rem;
+  background: green;
+  color: white;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+}
+
+.button.success:hover {
+  background: lightgreen;
+}
+
+.button.success:active {
+  background: darkgreen;
+}
+
+.list {
+  font-weight: bold;
+}
+
+.task.list {
+  /*background: lightseagreen;*/
+  list-style: none;
+}
+
+.task.list .item {
+  font-size: 1.2rem;
+}
