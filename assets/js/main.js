@@ -4,12 +4,14 @@ $(document).ready( function() {
     var tasksModel = new window.TasksModel(this);
     var tasksView = new window.TasksView(this);
 
-    tasksView.placeTasks(tasksModel.getTasks());
+    tasksModel.getTasks(function(todos) {
+        tasksView.placeTasks(todos);
+    });
     tasksView.setUpNewTaskForm();
 
     // Actions from view
     this.checkboxClickedAction = function(id, checked) {
-        tasksModel.checkboxClicked(id, checked);
+        tasksModel.updateCheckedForId(id, checked);
     };
 
     this.newTaskClicked = function(taskContent) {

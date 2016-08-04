@@ -1,39 +1,36 @@
 (function (window) {
     'use strict';
 
-    var tasks = [
-        {
-            id: 1,
-            content: 'first task',
-            done: false
-        },
-        {
-            id: 2,
-            content: 'second task',
-            done: false
-        }
-    ];
-
     var TasksModel = function(controller) {
+        var model = this;
         this.controller = controller;
-        this.tasks = tasks;
 
-        this.getTasks = function() {
-            return this.tasks;
+        this.getTasks = function(callback) {
+            //return this.tasks;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    // return? nope
+                    model.tasks = JSON.parse(xmlhttp.response);
+                    callback(model.tasks);
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:4000/todos", true);
+            xmlhttp.send();
         }
 
         this.getTask = function(id) {
-            for (var i=0; i < tasks.length; i++) {
-                if (tasks[i].id === id) {
-                    return tasks[i];
+            for (var i=0; i < this.tasks.length; i++) {
+                if (this.tasks[i].id === id) {
+                    return this.tasks[i];
                 }
             }
         }
 
-        this.checkboxClicked = function(id, checked) {
+        this.updateCheckedForId = function(id, checked) {
             var task = this.getTask(id);
             task.done = checked;
-            console.log(tasks);
+            console.log(this.tasks);
         }
 
         this.newTask = function(taskContent) {
