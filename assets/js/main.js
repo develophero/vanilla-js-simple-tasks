@@ -19,6 +19,17 @@ $(document).ready( function() {
         tasksView.placeTask(newTask);
     }
 
+    this.deleteClickedAction = function(taskId) {
+        // Called by the view, then sends an action back to the view
+        tasksModel.deleteTask(taskId);
+        tasksView.removeTask(taskId);
+    }
+
+    this.editSaved = function(taskId, newContent) {
+        // Called by the view
+        tasksModel.saveTask(taskId, newContent);
+    }
+
 });
 
 

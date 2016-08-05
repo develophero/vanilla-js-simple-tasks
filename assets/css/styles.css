@@ -50,8 +50,12 @@ body {
   list-style: none;
 }
 
-.task.list .item {
+.task.list li {
   font-size: 1.2rem;
+}
+
+.task.list li .btn {
+    margin-left: 1rem;
 }
 
 .task-edit-wrapper {

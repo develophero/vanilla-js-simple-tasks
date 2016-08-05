@@ -1,16 +1,27 @@
 (function (window) {
     'use strict';
 
+    var tasks = [
+        {
+            id: 1,
+            content: 'My Task 1',
+            done: false
+        },
+        {
+            id: 2,
+            content: 'My Task 2',
+            done: false
+        }
+    ]
+
     var TasksModel = function(controller) {
         var model = this;
         this.controller = controller;
         this.tasks = null;
 
         this.getTasks = function(callback) {
-            $.get('http://localhost:4000/todos', function(response) {
-                model.tasks = response;
-                callback(model.tasks);
-            });
+            model.tasks = tasks;
+            return callback(model.tasks);
         }
 
         this.getTask = function(id) {
@@ -35,6 +46,15 @@
             }
             this.tasks.push(newTask);
             return newTask;
+        }
+
+        this.saveTask = function(taskId, taskContent) {
+            console.log('To be implemented in model - edit task with id ' + taskId + ' and new content: ' + taskContent);
+        }
+
+        // Called from a click on the View -> Controller -> Model
+        this.deleteTask = function(id) {
+            console.log('To be implemented in model - delete task with id ' + id);
         }
     }
 
