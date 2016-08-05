@@ -124,10 +124,10 @@ function buttonClicked() {
     console.log('button clicked');
 }
 
+// Event listener
 var myButton = document.getElementById('my-button');
 console.log(myButton);
 myButton.addEventListener('click', function() {
     console.log('button was clicked');
 })
 
-// Event listener
